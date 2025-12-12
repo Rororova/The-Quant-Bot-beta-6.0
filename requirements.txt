@@ -1,0 +1,10 @@
+matplotlib
+seaborn
+pandas
+numpy
+aiosqlite
+discord.py
+flask
+python-dotenv
+supabase
+postgrest
