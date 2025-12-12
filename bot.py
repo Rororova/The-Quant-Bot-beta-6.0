@@ -7,7 +7,7 @@ import config
 from quiz_system import QuizSystem
 from analytics import AnalyticsSystem, RankingSystem
 from admin_system import AdminSystem
-import webserver
+
 
 # Import database manager based on config
 if config.DATABASE_TYPE == 'supabase':
@@ -719,10 +719,11 @@ async def help_command(ctx):
 
     await ctx.send(embed=embed)
 
-webserver.keep_alive()
+
 if __name__ == "__main__":
 
     bot.run(config.DISCORD_TOKEN)
+
 
 
 
