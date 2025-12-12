@@ -2,18 +2,23 @@ import asyncio
 import random
 import uuid
 from datetime import datetime
-from typing import Dict, List, Optional, Tuple, TYPE_CHECKING
+from typing import Dict, List, Optional, Tuple
 
 import aiosqlite
 
 import config
 
-if TYPE_CHECKING:
-    # Only import for type checking, not runtime
+# Import DatabaseManager based on config
+# This prevents NameError when type hints are evaluated
+try:
     if config.DATABASE_TYPE == 'supabase':
         from database_supabase_secure import DatabaseManager
     else:
         from database import DatabaseManager
+except (ImportError, AttributeError):
+    # Fallback - DatabaseManager will be passed as parameter anyway
+    # This is just to prevent NameError in type hints
+    DatabaseManager = type('DatabaseManager', (), {})
 
 
 class QuizSystem:
@@ -245,3 +250,4 @@ class QuizSystem:
 
         stats = await self._calculate_final_stats(session_id)
         return {'quiz_ended': True, 'final_stats': stats}
+
