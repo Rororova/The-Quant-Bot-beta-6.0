@@ -2,16 +2,22 @@ import asyncio
 import random
 import uuid
 from datetime import datetime
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, TYPE_CHECKING
 
 import aiosqlite
 
 import config
-from database import DatabaseManager
+
+if TYPE_CHECKING:
+    # Only import for type checking, not runtime
+    if config.DATABASE_TYPE == 'supabase':
+        from database_supabase_secure import DatabaseManager
+    else:
+        from database import DatabaseManager
 
 
 class QuizSystem:
-    def __init__(self, db_manager: DatabaseManager):
+    def __init__(self, db_manager: 'DatabaseManager'):
         self.db = db_manager
         self.active_sessions = {}
 
